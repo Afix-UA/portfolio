@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20241204144335">
+	<link rel="stylesheet" href="css/style.min.css?_v=20241204151913">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +48,7 @@
 									<div class="hero__content">
 
 										<h2 class="hero__name">Kolya Kolchenko</h2>
-										<h1 data-period="2000" data-type='[ "web developer", "Freelancer"]' class="hero__title title">web developer</h1>
+										<h1 data-period="2000" data-type='[ "web developer", "Freelancer", "Teacher"]' class="hero__title title">web developer</h1>
 
 										<h5 class="hero__position">I'm a front-end development specialist.</h5>
 										<p class="hero__info-text">My goal is to create impressive and intuitive
@@ -336,7 +336,7 @@
 						display: flex;
 						justify-content:center;
 						align-items: center;
-						   background-color: #0C0C0C;
+						background-color: #0C0C0C;
 					}
 					/* Блок з елементами */
 					.fls-preloader__body{
@@ -347,7 +347,9 @@
 						align-items: center;
 					}
 					.fls-preloader__logo {
-					 animation: ping 2s ease-in-out infinite both;
+						width: 820px;
+						height: 820px;
+						animation: ping 2s ease-in-out infinite both;
 					}
 					.lock body{
 						overflow: hidden;
@@ -362,6 +364,14 @@
 						transition: opacity 0.5s ease 0s;
 						opacity: 1;
 						visibility: visible;
+					}
+
+					@media (max-width:479.98px){
+		  				.fls-preloader__logo {
+							width: 320px;
+							height: 320px;
+							
+						}
 					}
 
 
@@ -448,7 +458,7 @@
 			preloader();
 		</script>
 	</div>
-	<script src="js/app.min.js?_v=20241204144335"></script>
+	<script src="js/app.min.js?_v=20241204151913"></script>
 </body>
 
 </html>

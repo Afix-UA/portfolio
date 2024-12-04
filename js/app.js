@@ -6142,8 +6142,8 @@ PERFORMANCE OF THIS SOFTWARE.
                 };
                 var dots = {
                     nb: 250,
-                    distance: 170,
-                    d_radius: 100,
+                    distance: 80,
+                    d_radius: 150,
                     array: []
                 };
                 function Dot() {

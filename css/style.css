@@ -648,33 +648,34 @@ canvas {
   width: 100%;
   justify-content: center;
   gap: .625rem;
-  align-items: center
+  align-items: center;
+  z-index: 2
 }
-.social li:nth-child(3n+1) {
+.social li:nth-child(1) {
   -webkit-animation-delay: 2s;
   animation-delay: 2s
 }
-.social li:nth-child(3n+2) {
+.social li:nth-child(2) {
   -webkit-animation-delay: 4s;
   animation-delay: 4s
 }
-.social li:nth-child(3n+3) {
+.social li:nth-child(3) {
   -webkit-animation-delay: 6s;
   animation-delay: 6s
 }
-.social li:nth-child(3n+4) {
+.social li:nth-child(4) {
   -webkit-animation-delay: 8s;
   animation-delay: 8s
 }
 .social__item {
-  -webkit-animation: rotate-scale-up 1.65s linear both;
-  animation: rotate-scale-up 1.65s linear both
+  -webkit-animation: jello-horizontal 8s infinite;
+  animation: jello-horizontal 8s infinite
 }
 .social__link {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.25rem;
+  padding: .625rem;
   transition: all .3s;
   position: relative;
   transition: all .3s
@@ -707,32 +708,64 @@ canvas {
     transform: translateY(-8px)
   }
 }
-@-webkit-keyframes rotate-scale-up {
+@-webkit-keyframes jello-horizontal {
   0% {
-    -webkit-transform: scale(1) rotateZ(0);
-    transform: scale(1) rotateZ(0)
+    -webkit-transform: scale3d(1,1,1);
+    transform: scale3d(1,1,1)
   }
-  50% {
-    -webkit-transform: scale(2) rotateZ(180deg);
-    transform: scale(2) rotateZ(180deg)
+  3% {
+    -webkit-transform: scale3d(1.25,.75,1);
+    transform: scale3d(1.25,.75,1)
+  }
+  4% {
+    -webkit-transform: scale3d(.75,1.25,1);
+    transform: scale3d(.75,1.25,1)
+  }
+  5% {
+    -webkit-transform: scale3d(1.15,.85,1);
+    transform: scale3d(1.15,.85,1)
+  }
+  6% {
+    -webkit-transform: scale3d(.95,1.05,1);
+    transform: scale3d(.95,1.05,1)
+  }
+  7% {
+    -webkit-transform: scale3d(1.05,.95,1);
+    transform: scale3d(1.05,.95,1)
   }
   100% {
-    -webkit-transform: scale(1) rotateZ(360deg);
-    transform: scale(1) rotateZ(360deg)
+    -webkit-transform: scale3d(1,1,1);
+    transform: scale3d(1,1,1)
   }
 }
-@keyframes rotate-scale-up {
+@keyframes jello-horizontal {
   0% {
-    -webkit-transform: scale(1) rotateZ(0);
-    transform: scale(1) rotateZ(0)
+    -webkit-transform: scale3d(1,1,1);
+    transform: scale3d(1,1,1)
   }
-  50% {
-    -webkit-transform: scale(2) rotateZ(180deg);
-    transform: scale(2) rotateZ(180deg)
+  3% {
+    -webkit-transform: scale3d(1.25,.75,1);
+    transform: scale3d(1.25,.75,1)
+  }
+  4% {
+    -webkit-transform: scale3d(.75,1.25,1);
+    transform: scale3d(.75,1.25,1)
+  }
+  5% {
+    -webkit-transform: scale3d(1.15,.85,1);
+    transform: scale3d(1.15,.85,1)
+  }
+  6% {
+    -webkit-transform: scale3d(.95,1.05,1);
+    transform: scale3d(.95,1.05,1)
+  }
+  7% {
+    -webkit-transform: scale3d(1.05,.95,1);
+    transform: scale3d(1.05,.95,1)
   }
   100% {
-    -webkit-transform: scale(1) rotateZ(360deg);
-    transform: scale(1) rotateZ(360deg)
+    -webkit-transform: scale3d(1,1,1);
+    transform: scale3d(1,1,1)
   }
 }
 .about {
@@ -1550,6 +1583,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   .hero__body {
     gap: 5.75rem
   }
+  .social__link {
+    font-size: 2.5rem
+  }
   .about__label {
     font-size: 2rem
   }
@@ -1589,6 +1625,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   }
   .hero__body {
     gap: .9375rem
+  }
+  .social__link {
+    font-size: 1.5625rem
   }
   .about__label {
     font-size: 1.5rem
@@ -1822,6 +1861,16 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   @supports not (gap:clamp(0.9375rem ,-0.3458333333rem + 6.4166666667vw ,5.75rem)) {
     .hero__body {
       gap: calc(.9375rem + 4.8125 * (100vw - 20rem)/ 75)
+    }
+  }
+  @supports (font-size:clamp(1.5625rem ,1.3125rem + 1.25vw ,2.5rem)) {
+    .social__link {
+      font-size: clamp(1.5625rem ,1.3125rem + 1.25vw ,2.5rem)
+    }
+  }
+  @supports not (font-size:clamp(1.5625rem ,1.3125rem + 1.25vw ,2.5rem)) {
+    .social__link {
+      font-size: calc(1.5625rem + .9375 * (100vw - 20rem)/ 75)
     }
   }
   @supports (font-size:clamp(1.5rem ,1.3666666667rem + 0.6666666667vw ,2rem)) {

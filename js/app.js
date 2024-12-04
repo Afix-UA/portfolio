@@ -6126,8 +6126,8 @@ PERFORMANCE OF THIS SOFTWARE.
         }));
         modules_flsModules.gallery = galleyItems;
     }
-    function checkMediaQuery() {
-        if (window.innerWidth > 768) {
+    function checkTouch() {
+        if (!isMobile.any()) {
             var canvasDots = function() {
                 var canvas = document.querySelector("#x-canvas"), ctx = canvas.getContext("2d"), colorDot = "#00c6d7", color = "#00c6d7";
                 canvas.width = window.innerWidth;
@@ -6141,9 +6141,9 @@ PERFORMANCE OF THIS SOFTWARE.
                     y: 30 * canvas.height / 100
                 };
                 var dots = {
-                    nb: 250,
-                    distance: 80,
-                    d_radius: 150,
+                    nb: 500,
+                    distance: 50,
+                    d_radius: 50,
                     array: []
                 };
                 function Dot() {
@@ -6217,17 +6217,17 @@ PERFORMANCE OF THIS SOFTWARE.
                 const period = elements[i].getAttribute("data-period");
                 if (toRotate) new Typewriter(elements[i], JSON.parse(toRotate), period);
             }
-        } else {
-            const elements = document.getElementsByClassName("hero__title");
-            for (let i = 0; i < elements.length; i++) {
-                const toRotate = elements[i].getAttribute("data-type");
-                const period = elements[i].getAttribute("data-period");
-                if (toRotate) new Typewriter(elements[i], JSON.parse(toRotate), period);
-            }
+            return;
+        }
+        const elements = document.getElementsByClassName("hero__title");
+        for (let i = 0; i < elements.length; i++) {
+            const toRotate = elements[i].getAttribute("data-type");
+            const period = elements[i].getAttribute("data-period");
+            if (toRotate) new Typewriter(elements[i], JSON.parse(toRotate), period);
         }
     }
-    window.addEventListener("resize", checkMediaQuery);
-    window.addEventListener("load", checkMediaQuery);
+    window.addEventListener("resize", checkTouch);
+    window.addEventListener("load", checkTouch);
     function hoverItem() {
         const items = document.querySelectorAll(".projects-swiper__slide");
         if (items) items.forEach((item => {

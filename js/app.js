@@ -6128,89 +6128,120 @@ PERFORMANCE OF THIS SOFTWARE.
     }
     function checkTouch() {
         if (!isMobile.any()) {
-            var canvasDots = function() {
-                var canvas = document.querySelector("#x-canvas"), ctx = canvas.getContext("2d"), colorDot = "#00c6d7", color = "#00c6d7";
+            const canvas = document.querySelector("#canvasBall");
+            if (!canvas) {
+                console.log("canvas не знайдений в html");
+                return;
+            }
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const radius = 80;
+            const color = "0, 198, 215";
+            const coefficientSpeed = .3;
+            const coefficientRadiusBall = 2;
+            const lineWidth = .5;
+            class Ball {
+                constructor(x, y, speed, radius) {
+                    this.x = x;
+                    this.y = y;
+                    this.speedX = speed;
+                    this.speedY = speed;
+                    this.radius = radius;
+                    this.colorBall = this.color();
+                }
+                color() {
+                    return `rgb( ${color},${Math.random() * .9 + .1})`;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 10);
+                    ctx.fillStyle = this.colorBall;
+                    ctx.fill();
+                    ctx.closePath();
+                }
+                moveBall() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) this.speedX = -this.speedX;
+                    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) this.speedY = -this.speedY;
+                }
+                colision(ball) {
+                    ball.forEach((ball => {
+                        const ballx = ball.x - this.x;
+                        const bally = ball.y - this.y;
+                        const distance = Math.sqrt(ballx * ballx + bally * bally);
+                        if (distance / 10 < ball.radius + this.radius) {
+                            ctx.beginPath();
+                            ctx.moveTo(this.x, this.y);
+                            ctx.lineTo(ball.x, ball.y);
+                            ctx.strokeStyle = this.colorBall;
+                            ctx.lineWidth = lineWidth;
+                            ctx.stroke();
+                        }
+                    }));
+                }
+            }
+            class workspace {
+                constructor() {
+                    this.balls = [];
+                    this.mouseX = 0;
+                    this.mouseY = 0;
+                    document.addEventListener("mousemove", (e => this.mouseMove(e)));
+                }
+                mouseMove(e) {
+                    this.mouseX = e.clientX;
+                    this.mouseY = e.clientY;
+                    console.log("mouse");
+                    this.balls.forEach((ball => {
+                        const ballx = this.mouseX - ball.x;
+                        const bally = this.mouseY - ball.y;
+                        const distance = Math.sqrt(ballx * ballx + bally * bally);
+                        if (distance < ball.radius + 100) {
+                            ball.speedX = -ballx / 100;
+                            ball.speedY = -bally / 100;
+                        }
+                    }));
+                }
+                drawLine() {
+                    this.balls.forEach((ball => {
+                        const ballx = this.mouseX - ball.x;
+                        const bally = this.mouseY - ball.y;
+                        const distance = Math.sqrt(ballx * ballx + bally * bally);
+                        if (distance / 1 < ball.radius + radius) {
+                            ctx.beginPath();
+                            ctx.moveTo(this.mouseX, this.mouseY);
+                            ctx.lineTo(ball.x, ball.y);
+                            ctx.strokeStyle = ball.colorBall;
+                            ctx.lineWidth = lineWidth;
+                            ctx.stroke();
+                        }
+                    }));
+                }
+                makeBalls() {
+                    for (let i = 0; i < 200; i++) this.balls.push(new Ball(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * coefficientSpeed + .2, Math.random() * coefficientRadiusBall + .2));
+                }
+                clearBoard() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+                update() {
+                    this.clearBoard();
+                    this.balls.forEach((ball => {
+                        ball.draw();
+                        ball.moveBall();
+                        ball.colision(this.balls);
+                    }));
+                    this.drawLine();
+                    requestAnimationFrame((() => this.update()));
+                }
+            }
+            addEventListener("resize", (() => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                canvas.style.display = "block";
-                ctx.fillStyle = colorDot;
-                ctx.lineWidth = .2;
-                ctx.strokeStyle = color;
-                var mousePosition = {
-                    x: 30 * canvas.width / 100,
-                    y: 30 * canvas.height / 100
-                };
-                var dots = {
-                    nb: 500,
-                    distance: 50,
-                    d_radius: 50,
-                    array: []
-                };
-                function Dot() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.vx = -.5 + Math.random();
-                    this.vy = -.5 + Math.random();
-                    this.radius = Math.random();
-                }
-                Dot.prototype = {
-                    create: function() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                        ctx.fill();
-                    },
-                    animate: function() {
-                        for (let i = 0; i < dots.nb; i++) {
-                            var dot = dots.array[i];
-                            if (dot.y < 0 || dot.y > canvas.height) {
-                                dot.vx = dot.vx;
-                                dot.vy = -dot.vy;
-                            } else if (dot.x < 0 || dot.x > canvas.width) {
-                                dot.vx = -dot.vx;
-                                dot.vy = dot.vy;
-                            }
-                            dot.x += dot.vx;
-                            dot.y += dot.vy;
-                        }
-                    },
-                    line: function() {
-                        for (let i = 0; i < dots.nb; i++) for (let j = 0; j < dots.nb; j++) {
-                            var i_dot = dots.array[i];
-                            var j_dot = dots.array[j];
-                            if (i_dot.x - j_dot.x < dots.distance && i_dot.y - j_dot.y < dots.distance && i_dot.x - j_dot.x > -dots.distance && i_dot.y - j_dot.y > -dots.distance) if (i_dot.x - mousePosition.x < dots.d_radius && i_dot.y - mousePosition.y < dots.d_radius && i_dot.x - mousePosition.x > -dots.d_radius && i_dot.y - mousePosition.y > -dots.d_radius) {
-                                ctx.beginPath();
-                                ctx.moveTo(i_dot.x, i_dot.y);
-                                ctx.lineTo(j_dot.x, j_dot.y);
-                                ctx.stroke();
-                                ctx.closePath();
-                            }
-                        }
-                    }
-                };
-                function createDots() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    for (let i = 0; i < dots.nb; i++) {
-                        dots.array.push(new Dot);
-                        var dot = dots.array[i];
-                        dot.create();
-                    }
-                    dot = dots.array[0];
-                    dot.line();
-                    dot.animate();
-                }
-                window.onmousemove = function(parameter) {
-                    mousePosition.x = parameter.pageX;
-                    mousePosition.y = parameter.pageY;
-                };
-                mousePosition.x = window.innerWidth / 2;
-                mousePosition.y = window.innerHeight / 2;
-                function animate() {
-                    createDots();
-                    requestAnimationFrame(animate);
-                }
-                animate();
-            };
-            canvasDots();
+            }));
+            const game = new workspace;
+            game.makeBalls();
+            game.update();
             const elements = document.getElementsByClassName("hero__title");
             for (let i = 0; i < elements.length; i++) {
                 const toRotate = elements[i].getAttribute("data-type");

@@ -311,7 +311,7 @@ body {
 .tooltip {
   position: fixed;
   bottom: 2.5rem;
-  right: 5rem;
+  right: calc(3.072917% + 1.1875rem);
   cursor: pointer;
   display: block;
   padding: .625rem 0;
@@ -322,7 +322,9 @@ body {
   -webkit-animation: jello-horizontal 3s infinite;
   animation: jello-horizontal 3s infinite;
   font-size: 3.125rem;
-  color: #00c6d7
+  color: #00c6d7;
+  -webkit-filter: drop-shadow(3px 3px 3px #0c0c0c);
+  filter: drop-shadow(3px 3px 3px #0c0c0c)
 }
 .tooltip__text {
   visibility: hidden;
@@ -337,7 +339,9 @@ body {
   bottom: 100%;
   z-index: 100;
   right: 0;
-  transition: all .3s
+  transition: all .3s;
+  -webkit-filter: drop-shadow(3px 3px 3px #0c0c0c);
+  filter: drop-shadow(3px 3px 3px #0c0c0c)
 }
 .tooltip__text::before {
   content: "";
@@ -350,6 +354,14 @@ body {
   border-top: 20px solid #00c6d7;
   top: 88%;
   right: .3125rem
+}
+.tooltip:focus-within .tooltip__text {
+  opacity: 1;
+  visibility: visible
+}
+.tooltip:focus-within .tooltip__title {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused
 }
 .title {
   color: #fffbf0;
@@ -1803,6 +1815,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   .progres-bar {
     width: 5.625rem;
     height: 5.625rem
+  }
+  .tooltip {
+    right: .625rem
   }
   .button {
     width: 100%

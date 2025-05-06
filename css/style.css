@@ -363,6 +363,9 @@ body {
   -webkit-animation-play-state: paused;
   animation-play-state: paused
 }
+.text {
+  color: #fffbf0
+}
 .title {
   color: #fffbf0;
   font-family: Signika;
@@ -470,54 +473,6 @@ body {
     transform: translateY(-90%);
     opacity: 1
   }
-}
-.menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 12;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-left: 8.072917%;
-  padding-right: 8.072917%
-}
-.menu__list {
-  display: grid;
-  row-gap: 1.75rem
-}
-.menu__item {
-  position: relative;
-  z-index: 1
-}
-.menu__item span {
-  position: absolute;
-  top: 50%;
-  z-index: 1;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  padding: .625rem;
-  padding-right: 1.25rem;
-  background-color: #00c6d7;
-  border-radius: .625rem;
-  white-space: nowrap;
-  text-align: auto;
-  transition: all .5s
-}
-.menu__item:hover span {
-  visibility: visible;
-  opacity: 1;
-  -webkit-transform: translate(-90%,-50%);
-  transform: translate(-90%,-50%)
-}
-.menu__item:hover .menu__link {
-  border-color: #00c6d7
-}
-.menu__item:hover .menu__link::before {
-  color: #00c6d7
 }
 canvas {
   position: absolute;
